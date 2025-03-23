@@ -4,7 +4,7 @@ export class Product {
     public name: string,
     public company: string,
     public price: number,
-    public sShow: boolean,
+    public isShow: boolean,
     public createDate: Date,
     public modifyDate?: Date
   ) {}
