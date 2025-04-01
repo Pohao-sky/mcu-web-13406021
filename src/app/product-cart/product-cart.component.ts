@@ -4,8 +4,10 @@ import { Component } from '@angular/core';
   selector: 'app-product-cart',
   imports: [],
   templateUrl: './product-cart.component.html',
-  styleUrl: './product-cart.component.scss'
+  styleUrl: './product-cart.component.scss',
 })
 export class ProductCartComponent {
-
+  productName = '書籍A';
+  author = '作者甲、作者乙、作者丙';
+  company = '博碩文化';
 }
