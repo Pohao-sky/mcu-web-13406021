@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { booleanAttribute, Component, Input, numberAttribute } from '@angular/core';
 
 @Component({
   selector: 'app-product-cart',
@@ -7,6 +7,9 @@ import { Component, Input } from '@angular/core';
   styleUrl: './product-cart.component.scss',
 })
 export class ProductCartComponent {
+  @Input({ required: true, transform: numberAttribute })
+  id!: number;
+
   @Input()
   productName!: string;
 
@@ -16,7 +19,7 @@ export class ProductCartComponent {
   @Input()
   company!: string;
 
-  @Input()
+  @Input({ transform: booleanAttribute })
   isShow!: boolean;
 
   @Input()
