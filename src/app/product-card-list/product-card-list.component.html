@@ -1,3 +1,4 @@
+@for (product of products; track $index) {
 <app-product-cart
   [id]="product.id"
   [productName]="product.name"
@@ -7,30 +8,4 @@
   [createDate]="product.createDate"
   [price]="product.price"
 ></app-product-cart>
-<app-product-cart
-  [id]="product.id"
-  [productName]="product.name"
-  [author]="product.authors"
-  [(isShow)]="product.isShow"
-  [photoUrl]="product.photoUrl"
-  [createDate]="product.createDate"
-  [price]="product.price"
-></app-product-cart
-><app-product-cart
-  [id]="product.id"
-  [productName]="product.name"
-  [author]="product.authors"
-  [(isShow)]="product.isShow"
-  [photoUrl]="product.photoUrl"
-  [createDate]="product.createDate"
-  [price]="product.price"
-></app-product-cart
-><app-product-cart
-  [id]="product.id"
-  [productName]="product.name"
-  [author]="product.authors"
-  [(isShow)]="product.isShow"
-  [photoUrl]="product.photoUrl"
-  [createDate]="product.createDate"
-  [price]="product.price"
-></app-product-cart>
+}
