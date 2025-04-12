@@ -15,7 +15,7 @@ export class ProductCartComponent {
   productName!: string;
 
   @Input()
-  author!: string;
+  authors!: string[];
 
   @Input()
   company!: string;
@@ -37,6 +37,7 @@ export class ProductCartComponent {
 
   @HostBinding('class')
   class = 'app-product-cart';
+  $last: any;
 
   onSetDisplay(isShow: boolean): void {
     this.isShowChange.emit(isShow);
