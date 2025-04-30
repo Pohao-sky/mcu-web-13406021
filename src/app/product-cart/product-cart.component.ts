@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, HostBinding, numberAttribute, input, model } from '@angular/core';
+import { Component, HostBinding, numberAttribute, input, booleanAttribute, output } from '@angular/core';
 
 @Component({
   selector: 'app-product-cart',
@@ -16,7 +16,7 @@ export class ProductCartComponent {
 
   readonly company = input<string>();
 
-  readonly isShow = model.required<boolean>();
+  readonly isShow = input.required<boolean, string | boolean>({ transform: booleanAttribute });
 
   readonly photoUrl = input<string>();
 
@@ -24,11 +24,8 @@ export class ProductCartComponent {
 
   readonly price = input<number, string | number>(0, { transform: numberAttribute });
 
+  readonly view = output<void>();
+
   @HostBinding('class')
   class = 'app-product-cart';
-  $last: any;
-
-  onSetDisplay(isShow: boolean): void {
-    this.isShow.set(isShow);
-  }
 }
