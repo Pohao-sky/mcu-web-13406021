@@ -1,4 +1,4 @@
-import { Component, input, Input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { ProductCartComponent } from '../product-cart/product-cart.component';
 import { Product } from '../models/product';
 import { PaginationComponent } from '../pagination/pagination.component';
