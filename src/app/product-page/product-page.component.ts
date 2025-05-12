@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ProductCardListComponent } from '../product-card-list/product-card-list.component';
 import { Product } from '../models/product';
 import { PaginationComponent } from '../pagination/pagination.component';
+import { BehaviorSubject, combineLatest, startWith, Subject, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-product-page',
@@ -16,7 +17,15 @@ export class ProductPageComponent implements OnInit {
 
   private ProductService = inject(ProductService);
 
-  pageIndex = 1;
+  private readonly pageIndex$ = new BehaviorSubject(1);
+  get pageIndex() {
+    return this.pageIndex$.value;
+  }
+  set pageIndex(value: number) {
+    this.pageIndex$.next(value);
+  }
+
+  private readonly refresh$ = new Subject<void>();
 
   pageSize = 5;
 
@@ -25,9 +34,18 @@ export class ProductPageComponent implements OnInit {
   products: Product[] = [];
 
   ngOnInit(): void {
-    this.getProduct();
-
-    console.log(this.products.map(({ id }) => id));
+    combineLatest([
+      this.pageIndex$.pipe(tap((value) => console.log('page index', value))),
+      this.refresh$.pipe(
+        startWith(undefined),
+        tap(() => console.log('refresh'))
+      ),
+    ])
+      .pipe(switchMap(() => this.ProductService.getList(undefined, this.pageIndex, this.pageSize)))
+      .subscribe(({ data, count }) => {
+        this.products = data;
+        this.totalCount = count;
+      });
   }
 
   onEdit(product: Product): void {
@@ -36,11 +54,6 @@ export class ProductPageComponent implements OnInit {
 
   onView(product: Product): void {
     this.router.navigate(['product', 'view', product.id]);
-  }
-
-  onPageIndexChange(pageIndex: number): void {
-    this.pageIndex = pageIndex;
-    this.getProduct();
   }
 
   onAdd(): void {
@@ -54,20 +67,10 @@ export class ProductPageComponent implements OnInit {
       createDate: new Date('2025/4/9'),
       price: 10000,
     });
-    this.ProductService.add(product).subscribe(() => this.getProduct());
+    this.ProductService.add(product).subscribe(() => this.refresh$.next());
   }
 
   onRemove({ id }: Product): void {
-    this.ProductService.remove(id).subscribe(() => {
-      this.pageIndex = 1;
-      this.getProduct();
-    });
-  }
-
-  private getProduct(): void {
-    this.ProductService.getList(undefined, this.pageIndex, this.pageSize).subscribe(({ data, count }) => {
-      this.products = data;
-      this.totalCount = count;
-    });
+    this.ProductService.remove(id).subscribe(() => (this.pageIndex = 1));
   }
 }
