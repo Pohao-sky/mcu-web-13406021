@@ -1,5 +1,5 @@
 import { ProductService } from './../services/product.service';
-import { Component, inject, input, numberAttribute, OnInit } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Product } from '../models/product';
 import { CurrencyPipe } from '@angular/common';
 import { Router } from '@angular/router';
@@ -10,25 +10,19 @@ import { Router } from '@angular/router';
   templateUrl: './product-detail-page.component.html',
   styleUrl: './product-detail-page.component.scss',
 })
-export class ProductDetailPageComponent implements OnInit {
-  id = input.required<number, string | number>({ transform: numberAttribute });
-
-  product!: Product;
+export class ProductDetailPageComponent {
+  readonly product = input.required<Product>();
 
   readonly router = inject(Router);
 
-  private ProductService = inject(ProductService);
-
-  ngOnInit(): void {
-    this.ProductService.getById(this.id()).subscribe((product) => (this.product = product));
-  }
+  private productService = inject(ProductService);
 
   onEdit(): void {
-    this.router.navigate(['product', 'form', this.product.id]);
+    this.router.navigate(['product', 'form', this.product().id]);
   }
 
   onRemove(): void {
-    this.ProductService.remove(this.product.id);
+    this.productService.remove(this.product().id);
     this.router.navigate(['products']);
   }
 
