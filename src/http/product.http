@@ -2,7 +2,7 @@
 GET http://[::]:3000/products HTTP/1.1
 
 ### Get list Paginate
-GET http://[::]:3000/products?_page=1&_per_page=1 HTTP/1.1
+GET http://[::]:3000/products?_page=1&_per_page=5 HTTP/1.1
 
 # Get by id
 GET http://[::]:3000/products/1 HTTP/1.1
