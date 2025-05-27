@@ -114,15 +114,15 @@
     },
     {
       "id": "2c62",
-      "name": "書籍Z",
+      "name": "書籍Z1",
       "company": "博碩文化",
       "authors": [
         "ABC"
       ],
-      "price": 100,
+      "price": 1000,
       "isShow": true,
       "photoUrl": "https://api.fnkr.net/testimg/200x200/DDDDDD/999999/?text=img",
-      "createDate": "2025-05-27T12:02:40.197Z"
+      "createDate": "2025-05-27T14:25:06.918Z"
     }
   ]
 }
